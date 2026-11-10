@@ -12,7 +12,16 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        return view('transaksi.index');
+        $transaksis = Transaksi::with('user')->withCount('details')->latest('id')->get();
+
+        return view('transaksi.index', compact('transaksis'));
+    }
+
+    public function show(Transaksi $transaksi)
+    {
+        $transaksi->load('details.produk', 'user');
+
+        return view('transaksi.show', compact('transaksi'));
     }
 
     public function create()

@@ -11,6 +11,15 @@ class Transaksi extends Model
 
     protected $fillable = ['tanggal_transaksi', 'user_id', 'metode_pembayaran_id', 'total_belanja', 'pay'];
 
+    protected $casts = [
+        'tanggal_transaksi' => 'date',
+    ];
+
+    public function getKembalianAttribute()
+    {
+        return $this->pay - $this->total_belanja;
+    }
+
     public function details()
     {
         return $this->hasMany(TransaksiDetail::class);

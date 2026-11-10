@@ -10,6 +10,7 @@ class TransaksiDetail extends Model
 
     public function produk()
     {
-        return $this->belongsTo(Produk::class);
+        // withTrashed: nota lama tetap bisa dibuka walau produknya sudah dihapus
+        return $this->belongsTo(Produk::class)->withTrashed();
     }
 }
