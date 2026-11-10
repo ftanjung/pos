@@ -9,9 +9,10 @@ class SatuanController extends Controller
 {
     public function index()
     {
-        $satuans = Satuan::latest()->get();
-
-        return view('satuan.index', compact('satuans'));
+       return view('satuan.index', [
+            'satuans' => Satuan::all(),
+        ]);
+    
     }
 
     public function create()
@@ -22,12 +23,12 @@ class SatuanController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama_satuan' => 'required|max:100|unique:satuans',
+            'nama_satuan' => 'required',
         ]);
 
         Satuan::create($data);
 
-        return redirect()->route('satuan.index')->with('success', 'Satuan ditambahkan');
+        return redirect()->route('satuan.index')->with('success', 'Satuan berhasil ditambahkan');
     }
 
     public function edit(Satuan $satuan)
@@ -38,7 +39,7 @@ class SatuanController extends Controller
     public function update(Request $request, Satuan $satuan)
     {
         $data = $request->validate([
-            'nama_satuan' => 'required|max:100|unique:satuans,nama_satuan,' . $satuan->id,
+             'nama_satuan' => 'required'
         ]);
 
         $satuan->update($data);
@@ -48,10 +49,6 @@ class SatuanController extends Controller
 
     public function destroy(Satuan $satuan)
     {
-        if ($satuan->produks()->exists()) {
-            return back()->with('error', 'Satuan masih dipakai produk, tidak bisa dihapus');
-        }
-
         $satuan->delete();
 
         return redirect()->route('satuan.index')->with('success', 'Satuan dihapus');

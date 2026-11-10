@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.index')
 
 @section('title', 'Satuan')
 
@@ -30,7 +30,7 @@
                                 <form action="{{ route('satuan.destroy', $k) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus satuan ini?')">Hapus</button>
+                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus Satuan ini?')">Hapus</button>
                                 </form>
                             </td>
                         </tr>
